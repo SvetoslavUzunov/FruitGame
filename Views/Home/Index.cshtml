@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Fruit Game";
+}
+
+<style>
+    body {
+        background-color: #4D774E;
+        font-family: 'Comic Sans MS';
+        padding: 0;
+        margin: 0;
+    }
+
+    h2, h3 {
+        color: darkorange;
+    }
+</style>
+
+<form action="/Home/Reset">
+    <input type="submit" value="New Game" style="background-color:yellow; color:black; font-size:20px; border:none;border-radius:6px" />
+</form>
+
+@if (!ViewBag.gameOver)
+{
+    <h2>Fruit Game</h2>
+    <form action="/Home/FireTop">
+        Top: <input type="range" name="position" min="0" max="100" />
+        <input type="submit" value="Fire Top" style="background-color:darkred; color:white; font-size:20px; border:none; border-radius:6px" />
+    </form>
+    <br />
+    <form action="/Home/FireBottom">
+        Bottom: <input type="range" name="position" min="0" max="100" />
+        <input type="submit" value="Fire Bottom" style="background-color:darkred; color:white; font-size:20px; border:none; border-radius:6px" />
+    </form>
+}
+
+@if (ViewBag.gameOver)
+{
+    <h2>Game Over!</h2>
+    <img src="~/images/explosion.png" />
+    <h3>Total scores: @ViewBag.scores</h3>
+}
+else
+{ <h2>Battle Field</h2>
+    for (int row = 0; row < ViewBag.countRows; row++)
+    {
+        for (int col = 0; col < ViewBag.countCols; col++)
+        {
+            <img src='/images/@(ViewBag.fruits[row,col]).png' />
+        }
+        <br />
+    }
+    <h3>Score: <b>@ViewBag.scores</b></h3>
+    <h3>Fired fruits: <b>@ViewBag.firedFruits</b></h3>
+}
